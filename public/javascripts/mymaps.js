@@ -6,7 +6,7 @@ function init() {
     map = new esri.Map("mapDiv", {
 	// change to user location
         center: [-77.6068, 43.1562],
-        zoom: 14,
+        zoom: 13,
         basemap: "streets"
     });
 }
