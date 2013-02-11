@@ -13,6 +13,10 @@ var express = require('express'),
 // connect to the heroku MongoDB
 mongoose.connect('mongodb://foodMapper:mapper@ds043467.mongolab.com:43467/heroku_app11746687');
 
+var storeSchema = mongoose.Schema({
+
+});
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback() {
