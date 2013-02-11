@@ -14,7 +14,7 @@ var MapView = Backbone.View.extend({
 
         mapOptions = {
             center: myloc,
-            zoom: 8,
+            zoom: 12,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
@@ -23,6 +23,9 @@ var MapView = Backbone.View.extend({
 
 var StoreMarkers = Backbone.View.extend({
     render: function () {
+	    var snapLayer = new google.maps.FusionTablesLayer('11ripikPPqtD0Bap-NqJ2dAD33mvMZAC8ZYxuLb0');
+	    snapLayer.setMap(map);
+	    /*
             var stores = new Stores();
             stores.fetch(function (stores) {
                 var length,
@@ -37,6 +40,7 @@ var StoreMarkers = Backbone.View.extend({
                     });
                 }
             });
+	    */
         }
 });
 
@@ -47,7 +51,9 @@ var FoodRoutes = Backbone.Router.extend({
     },
     index: function () {
         var mapView = new MapView();
+	var storeMarkers = new StoreMarkers()
         mapView.render();
+	storeMarkers.render();
     }
 });
 

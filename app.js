@@ -14,8 +14,35 @@ var express = require('express'),
 mongoose.connect('mongodb://foodMapper:mapper@ds043467.mongolab.com:43467/heroku_app11746687');
 
 var storeSchema = mongoose.Schema({
-
+    Address: String,
+    City: String,
+    County: String,
+    State: String,
+    Store_Name: String,
+    Zip5: Number,
+    Zip4: Number,
+    _id: {
+        $oid: String
+    },
+    loc: {
+        longitude: Number,
+        latitude: Number
+    }
 });
+
+var Store = mongoose.model('Store', storeSchema);
+
+/*
+Store.find(function (err, stores) {
+	console.log("findin");
+	if (err) {
+		console.log('DB Err');
+	} else {
+		console.log("else");
+		console.log(JSON.stringify(stores));
+	}
+});
+*/
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
