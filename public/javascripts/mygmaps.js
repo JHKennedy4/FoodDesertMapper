@@ -48,7 +48,6 @@ var FoodRoutes = Backbone.Router.extend({
     index: function () {
         var mapView = new MapView();
         mapView.render();
-        console.log("fuck");
     }
 });
 
