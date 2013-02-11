@@ -4,10 +4,21 @@
  */
 
 var express = require('express'),
+    mongoose = require('mongoose'),
     routes = require('./routes'),
-    market = require('./routes/market'),
+    stores = require('./routes/stores'),
     http = require('http'),
     path = require('path');
+
+// connect to the heroku MongoDB
+mongoose.connect('mongodb://foodMapper:mapper@ds043467.mongolab.com:43467/heroku_app11746687');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback() {
+    // yay!
+    console.log("connected to the db");
+});
 
 var app = express();
 
@@ -29,7 +40,7 @@ app.configure('development', function () {
 
 app.get('/', routes.index);
 // get the "resource" markets
-app.get('/markets', market.list);
+app.get('/stores', stores.list);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
