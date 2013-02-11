@@ -44,16 +44,52 @@ var StoreMarkers = Backbone.View.extend({
         }
 });
 
+var FormView = Backbone.View.extend({
+    el: '#mapDiv',
+    render: function () {
+        this.$el.html("<div class='container-fluid'>"+
+		"<div class='row'><div class='span2 offset2'><h1>Food Availability</h1></div></div>" +
+		"<div class='span4 offset3'"+
+		"<form>"+
+		"<h2>Grains</h2>"+
+		"<input type='checkbox' name='FoodCat' value='1'>Whole grain breads, rice, pasta, and pastries<br />"+
+		"<input type='checkbox' name='FoodCat' value='1'>Whole grain Cereals<br />"+
+		"<input type='checkbox' name='FoodCat' value='1'>Popcorn and other whole grain snacks<br />"+
+		"<input type='checkbox' name='FoodCat' value='1'>Non-whole grain breads, cereals, rice, pasta, pies, pastries, snacks, and flours<br />"+
+		"<h2>Vegetables</h2>"+
+		"<input type='checkbox' name='FoodCat' value='1'>All potato products<br />"+
+		"<input type='checkbox' name='FoodCat' value='1'>Dark green vegetables<br />"+
+		"<input type='checkbox' name='FoodCat' value='1'>Orange vegetables<br />"+
+		"<input type='checkbox' name='FoodCat' value='1'>Canned and dry beans, lentils, and peas (legumes)<br />"+
+		"<input type='checkbox' name='FoodCat' value='1'>Other vegetables<br />"+
+		"<h2>Fruits</h2>" +
+		"<input type='checkbox' name='FoodCat' value='1'>Whole Fruits<br />"+
+		"<input type='checkbox' name='FoodCat' value='1'>Fruit Juices<br />"+
+		"<h2>Milk Products</h2>"+
+		"<input type='checkbox' name='FoodCat' value='1'>Whole Milk, yogurt, and cream<br />"+
+		"<input type='checkbox' name='FoodCat' value='1'>Lower fat and skim milk and lowfat yogurt<br />"+
+		"<input type='checkbox' name='FoodCat' value='1'>All cheese (including cheese soup and sauce)<br />"+
+		"</form>" +
+		"</div>" +
+		"</div>");
+    }
+});
+
 var FoodRoutes = Backbone.Router.extend({
     routes: {
         "": "index",
-        "submit/:id" : "form"
+        "submit/:id" : "form",
+	"form": "form"
     },
     index: function () {
         var mapView = new MapView();
 	var storeMarkers = new StoreMarkers()
         mapView.render();
 	storeMarkers.render();
+    },
+    form: function () {
+        var formView = new FormView();
+	formView.render();
     }
 });
 

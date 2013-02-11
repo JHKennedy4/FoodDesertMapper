@@ -7,6 +7,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     routes = require('./routes'),
     stores = require('./routes/stores'),
+    form = require('./routes/form'),
     http = require('http'),
     path = require('path');
 
@@ -70,7 +71,8 @@ app.configure('development', function () {
 });
 
 app.get('/', routes.index);
-// get the "resource" markets
+app.get('/form', form.form);
+// get the "resource" stores
 app.get('/stores', stores.list);
 
 http.createServer(app).listen(app.get('port'), function () {
