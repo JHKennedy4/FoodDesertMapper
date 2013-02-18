@@ -38,20 +38,13 @@ function init() {
         zoom: 13,
         basemap: "streets"
     });
-    $.ajax({
+    $.ajax("/stores", {
             dataType: "json",
-            url: "/stores",
-            success: function (data, code, jqx) {
-                console.log("anything?");
-                console.log(JSON.stringify(data));
-            },
-            error: function (jqx, err, ex) {
-                console.log("no?");
-                console.log(err);
-            },
-            complete: function (jqx, status) {
-                console.log("dicks" + status);
-            }
+        }).done(function (data) {
+            // works!
+            console.log(data);
+        }).fail(function () {
+            alert("failasaurous-rex");
         });
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
