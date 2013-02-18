@@ -1,46 +1,51 @@
 var map;
 
+//dojo.require("esri.map");
 
 var Stores = Backbone.Collection.extend({
-	url: "stores"
+	url: "http://jhk.cartodb.com/api/v2/sql?q=SELECT * FROM monroecountysnap"
 });
 
 var MapView = Backbone.View.extend({
     render: function () {
         console.log("render mapview");
-        var mapOptions, myloc;
-        myloc = new google.maps.LatLng(43.1562, -77.6068);
-	//if(navigator.geolocation) {
-
-        mapOptions = {
-            center: myloc,
-            zoom: 12,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
+        map = new esri.Map("mapDiv", {
+            center: [-77.6068, 43.1562],
+            zoom: 13,
+            basemap: "streets"
+        });
     }
 });
 
+function addPoint(store) {
+    var infoTemplate = new esri.InfoTemplate("${Name}"),
+	//, "Restroom: ${Facilities}<br />Phone: ${Phone}<br />Water: ${Water}");
+        infoSymbol = new esri.symbol.PictureMarkerSymbol("../img/icon.png",30,30),
+        point = new esri.Graphic({
+            "geometry": {
+                "x": store.latitude,
+                "y": store.longitude,
+                "spatialReference": {"wkid": 4326}
+            },
+            "attributes": {
+                "Name": store.name
+            }
+        });
+    point.setSymbol(infoSymbol);
+    point.setInfoTemplate(infoTemplate);
+
+    map.graphics.add(point);
+}
+
 var StoreMarkers = Backbone.View.extend({
     render: function () {
-	    var snapLayer = new google.maps.FusionTablesLayer('11ripikPPqtD0Bap-NqJ2dAD33mvMZAC8ZYxuLb0');
-	    snapLayer.setMap(map);
-	    /*
+            console.log("rendering store markers");
             var stores = new Stores();
-            stores.fetch(function (stores) {
-                var length,
-                    i,
-                    marker;
-                length = stores.length;
-                for (i = 0; i < length; i += 1) {
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(stores[i].loc.latitude, stores[i].loc.longitude),
-                        map: map,
-                        title: "Hello World!"
-                    });
-                }
-            });
-	    */
+            stores.fetch({ success: function (stores) {
+                    console.log("fetched stores");
+                    console.log(JSON.stringify(stores));
+                    _.each(stores, addPoint);
+                }});
         }
 });
 
@@ -82,10 +87,10 @@ var FoodRoutes = Backbone.Router.extend({
 	"form": "form"
     },
     index: function () {
-        var mapView = new MapView();
-	var storeMarkers = new StoreMarkers()
+        var mapView = new MapView(),
+            storeMarkers = new StoreMarkers();
         mapView.render();
-	storeMarkers.render();
+        // storeMarkers.render();
     },
     form: function () {
         var formView = new FormView();
@@ -93,11 +98,39 @@ var FoodRoutes = Backbone.Router.extend({
     }
 });
 
-$(document).ready(function () {
-  // Initialize the router.
-	var router = new FoodRoutes();
-	Backbone.history.start({pushState: true});
+function zoomToLocation(location) {
+    var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(
+                 location.coords.longitude, location.coords.latitude));
+    console.log(location.coords.longitude);
+    map.centerAndZoom(pt, 16);
+}
 
+function locationError(error) {
+    switch (error.code) {
+    case error.PERMISSION_DENIED:
+        alert("Location not provided");
+        break;
+    case error.POSITION_UNAVAILABLE:
+        alert("Current location not available");
+        break;
+    case error.TIMEOUT:
+        alert("Timeout");
+        break;
+    default:
+        alert("unknown error");
+        break;
+    }
+}
+
+
+$(document).ready(function () {
+    // Initialize the router.
+    var router = new FoodRoutes();
+    Backbone.history.start({pushState: true});
+
+    //if (navigator.geolocation) {
+        //navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
+    //}
 });
 
 /*

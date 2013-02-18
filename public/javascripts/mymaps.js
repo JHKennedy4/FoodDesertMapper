@@ -6,7 +6,7 @@ function zoomToLocation(location) {
     var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(
                  location.coords.longitude, location.coords.latitude));
     console.log(location.coords.longitude);
-    map.centerAndZoom(pt, 16);
+    map.centerAndZoom(pt, 15);
 }
 
 function locationError(error) {
@@ -27,9 +27,6 @@ function locationError(error) {
 }
 
 function addSymbol() {
-
-    var myPoint = {"geometry":{"x":-104.4140625,"y":69.2578125, "spatialReference":{"wkid":4326}},"attributes":{"XCoord":-104.4140625, "YCoord":69.2578125,"Plant":"Mesa Mint"},"symbol":{"color":[255,0,0,128], "size":12,"angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS", "style":"esriSMSSquare","outline":{"color":[0,0,0,255],"width":1, "type":"esriSLS","style":"esriSLSSolid"}}, "infoTemplate":{"title":"Vernal Pool Locations","content":"Latitude: ${YCoord} <br/> Longitude: ${XCoord} <br/> Plant Name:${Plant}"}};
-
     var gra = new esri.Graphic(myPoint);
     map.addLayer(gra);
 }
@@ -41,9 +38,25 @@ function init() {
         zoom: 13,
         basemap: "streets"
     });
+    $.ajax({
+            dataType: "json",
+            url: "/stores",
+            success: function (data, code, jqx) {
+                console.log("anything?");
+                console.log(JSON.stringify(data));
+            },
+            error: function (jqx, err, ex) {
+                console.log("no?");
+                console.log(err);
+            },
+            complete: function (jqx, status) {
+                console.log("dicks" + status);
+            }
+        });
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
     }
+
 
     /*
     //addSymbol();

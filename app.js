@@ -4,53 +4,21 @@
  */
 
 var express = require('express'),
-    mongoose = require('mongoose'),
     routes = require('./routes'),
     stores = require('./routes/stores'),
     form = require('./routes/form'),
     http = require('http'),
+    CartoDB = require('cartodb'),
+    secret = require('./secret.js'),
     path = require('path');
 
-// connect to the heroku MongoDB
-mongoose.connect('mongodb://foodMapper:mapper@ds043467.mongolab.com:43467/heroku_app11746687');
+var client = new CartoDB({user: secret.USER, api_key: secret.API_KEY});
 
-var storeSchema = mongoose.Schema({
-    Address: String,
-    City: String,
-    County: String,
-    State: String,
-    Store_Name: String,
-    Zip5: Number,
-    Zip4: Number,
-    _id: {
-        $oid: String
-    },
-    loc: {
-        longitude: Number,
-        latitude: Number
-    }
+client.on('connect', function () {
+	console.log("Hello CartoDB!");
 });
 
-var Store = mongoose.model('Store', storeSchema);
-
-/*
-Store.find(function (err, stores) {
-	console.log("findin");
-	if (err) {
-		console.log('DB Err');
-	} else {
-		console.log("else");
-		console.log(JSON.stringify(stores));
-	}
-});
-*/
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback() {
-    // yay!
-    console.log("connected to the db");
-});
+client.connect();
 
 var app = express();
 
@@ -73,9 +41,27 @@ app.configure('development', function () {
 app.get('/', routes.index);
 app.get('/form', form.form);
 // get the "resource" stores
-app.get('/stores', stores.list);
-
+app.get('/stores',  function (req, res) {
+    client.query("select * from monroecountysnap");
+    client.on('error', function (error) {
+        console.log("fucuilasdf!");
+    });
+    client.on('data', function (data) {
+        res.send(data);
+    });
+});
+app.get('/stores/:id', function (req, res) {
+    var id = req.params.id;
+    client.query("select * from monroecountysnap where cartodb_id = " + id);
+    client.on('error', function (error) {
+        console.log("id fail");
+    });
+    client.on('data', function (data) {
+        res.send(data);
+    });
+});
+    
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
-    console.log("http://127.0.0.1:3000");
+    console.log("http://127.0.0.1:" + app.get('port'));
 });

@@ -4,5 +4,16 @@
  */
 
 exports.list = function (req, res) {
-    res.send("respond with a resource");
+    var Store = mongoose.model('Store', storeSchema);
+    var stores = new Store();
+    res.send(stores.find(
+        {'State': 'NY', 'City': 'Rochester'},
+        function (err, stores) {
+            if (err) {
+                console.log('DB Err');
+            } else {
+                console.log(JSON.stringify(stores));
+            }
+        }
+    ));
 };
