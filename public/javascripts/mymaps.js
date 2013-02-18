@@ -26,9 +26,25 @@ function locationError(error) {
     }
 }
 
-function addSymbol() {
-    var gra = new esri.Graphic(myPoint);
-    map.addLayer(gra);
+function addPoint(store) {
+	console.log(store.store_name);
+    var infoTemplate = new esri.InfoTemplate("${Name}"),
+	infoSymbol =  new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10),
+        point = new esri.Graphic({
+            "geometry": {
+                "x": store.latitude,
+                "y": store.longitude,
+                "spatialReference": {"wkid": 4326}
+            },
+            "attributes": {
+                "Name": store.store_name
+            }
+        });
+    point.setSymbol(infoSymbol);
+    point.setInfoTemplate(infoTemplate);
+
+    map.graphics.add(point);
+
 }
 
 function init() {
@@ -43,22 +59,12 @@ function init() {
         }).done(function (data) {
             // works!
             console.log(data);
+            _.each(data.rows, addPoint);
         }).fail(function () {
             alert("failasaurous-rex");
         });
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
     }
-
-
-    /*
-    //addSymbol();
-    var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(
-                 -104.4140625, 69.2578125, new esri.SpatialReference({ wkid: 4326 })));
-    console.log(pt);
-    map.centerAndZoom(pt, 16);
-    */
-
-}
 
 dojo.addOnLoad(init);
