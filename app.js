@@ -42,13 +42,17 @@ app.get('/', routes.index);
 app.get('/form', form.form);
 // get the "resource" stores
 app.get('/stores',  function (req, res) {
-    client.query("select * from monroecountysnap");
+    client.query("select * from monroecountysnap", function (err, data) {
+        res.send(data);
+    });
+    /*
     client.on('error', function (error) {
         console.log("fucuilasdf!");
     });
     client.on('data', function (data) {
         res.send(data);
     });
+    */
 });
 app.get('/stores/:id', function (req, res) {
     var id = req.params.id;
