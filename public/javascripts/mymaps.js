@@ -1,10 +1,10 @@
-var map;
+var map, data;
 
 dojo.require("esri.map");
 
 function zoomToLocation(location) {
     var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(
-                 location.coords.longitude, location.coords.latitude));
+                location.coords.longitude, location.coords.latitude));
     console.log(location.coords.longitude);
     map.centerAndZoom(pt, 15);
 }
@@ -48,13 +48,13 @@ function addPoint(store) {
 }
 
 function init() {
-    //Rochester, NY: 43.1547, -77.6158
-    map = new esri.Map("mapDiv", {
-        center: [-77.6068, 43.1562],
-        zoom: 13,
-        basemap: "streets"
-    });
-    $.ajax("/stores", {
+        //Rochester, NY: 43.1547, -77.6158
+        map = new esri.Map("mapDiv", {
+            center: [-77.6068, 43.1562],
+            zoom: 13,
+            basemap: "streets"
+        });
+        $.ajax("/stores", {
             dataType: "json",
         }).done(function (data) {
             // works!
@@ -63,9 +63,9 @@ function init() {
         }).fail(function () {
             alert("failasaurous-rex");
         });
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
-    }
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
+        }
 }
 
 dojo.addOnLoad(init);

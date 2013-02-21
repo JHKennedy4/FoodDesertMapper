@@ -14,6 +14,7 @@ var express = require('express'),
     secret;
 
 // make localhost and heroku happy
+// so very, very happy
 if (fs.existsSync('./secret.js')) {
     secret = require('./secret.js');
 } else {
