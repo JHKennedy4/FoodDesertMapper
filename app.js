@@ -13,8 +13,8 @@ var express = require('express'),
     fs =  require('fs'),
     secret;
 
-if (fs.existsSync('./secret.js'))
-    secret = require('./secret.js'),
+if (fs.existsSync('./secret.js')) 
+    secret = require('./secret.js');
 
 // var client = new CartoDB({user: secret.USER, api_key: secret.API_KEY});
 var client = new CartoDB({user: process.env.USER || secret.USER,
