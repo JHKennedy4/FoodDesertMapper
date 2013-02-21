@@ -13,11 +13,13 @@ var express = require('express'),
     fs =  require('fs'),
     secret;
 
+// make localhost and heroku happy
 if (fs.existsSync('./secret.js')) {
     secret = require('./secret.js');
 } else {
     secret = {};
     secret.USER = false;
+    secret.API_KEY = false;
 }
 
 // var client = new CartoDB({user: secret.USER, api_key: secret.API_KEY});
