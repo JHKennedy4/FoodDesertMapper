@@ -16,6 +16,7 @@ var express = require('express'),
 if (fs.existsSync('./secret.js')) {
     secret = require('./secret.js');
 } else {
+    secret = {};
     secret.USER = false;
 }
 
