@@ -13,7 +13,7 @@ To run this locally, follow the link to CartoDB, and download the data. Then, cr
 
 Create a secret.js file from the template using your username and api key. Your api key can be found by clicking on your username at the top right of CartoDB.
 
-You can see the live app at food-desert-mapper.herokuapp.com.
+You can see app live at http://food-desert-mapper.herokuapp.com.
 
 Dependencies
 ------------
