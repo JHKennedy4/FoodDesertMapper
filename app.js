@@ -17,8 +17,8 @@ if (fs.existsSync('./secret.js'))
     secret = require('./secret.js');
 
 // var client = new CartoDB({user: secret.USER, api_key: secret.API_KEY});
-var client = new CartoDB({user: process.env.USER || secret.USER,
-                          api_key: process.env.API_KEY || secret.API_KEY});
+var client = new CartoDB({user: secret.USER || process.env.USER,
+                          api_key: secret.API_KEY || process.env.API_KEY});
 
 client.on('connect', function () {
 	console.log("Hello CartoDB!");
