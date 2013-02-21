@@ -9,8 +9,12 @@ var express = require('express'),
     form = require('./routes/form'),
     http = require('http'),
     CartoDB = require('cartodb'),
+    path = require('path'),
+    fs =  require('fs'),
+    secret;
+
+if (fs.existsSync('./secret.js'))
     secret = require('./secret.js'),
-    path = require('path');
 
 // var client = new CartoDB({user: secret.USER, api_key: secret.API_KEY});
 var client = new CartoDB({user: process.env.USER || secret.USER,
