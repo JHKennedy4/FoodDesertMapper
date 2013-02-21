@@ -12,7 +12,9 @@ var express = require('express'),
     secret = require('./secret.js'),
     path = require('path');
 
-var client = new CartoDB({user: secret.USER, api_key: secret.API_KEY});
+// var client = new CartoDB({user: secret.USER, api_key: secret.API_KEY});
+var client = new CartoDB({user: process.env.USER || secret.USER,
+                          api_key: process.env.API_KEY || secret.API_KEY});
 
 client.on('connect', function () {
 	console.log("Hello CartoDB!");
