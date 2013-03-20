@@ -32,8 +32,8 @@ function addPoint(store) {
 	infoSymbol =  new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10),
         point = new esri.Graphic({
             "geometry": {
-                "x": store.latitude,
-                "y": store.longitude,
+                "x": store.longitude,
+                "y": store.latitude,
                 "spatialReference": {"wkid": 4326}
             },
             "attributes": {
@@ -48,24 +48,24 @@ function addPoint(store) {
 }
 
 function init() {
-        //Rochester, NY: 43.1547, -77.6158
-        map = new esri.Map("mapDiv", {
-            center: [-77.6068, 43.1562],
-            zoom: 13,
-            basemap: "streets"
-        });
-        $.ajax("/stores", {
-            dataType: "json",
-        }).done(function (data) {
-            // works!
-            console.log(data);
-            _.each(data.rows, addPoint);
-        }).fail(function () {
-            alert("failasaurous-rex");
-        });
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
-        }
+    //Rochester, NY: 43.1547, -77.6158
+    map = new esri.Map("mapDiv", {
+        center: [-77.6068, 43.1562],
+        zoom: 13,
+        basemap: "streets"
+    });
+    $.ajax("/stores", {
+        dataType: "json",
+    }).done(function (data) {
+        // works!
+        console.log(data);
+        _.each(data.rows, addPoint);
+    }).fail(function () {
+        alert("failasaurous-rex");
+    });
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
+    }
 }
 
 dojo.addOnLoad(init);
