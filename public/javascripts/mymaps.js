@@ -29,7 +29,7 @@ function locationError(error) {
 function addPoint(store) {
 	console.log(store.store_name);
     var infoTemplate = new esri.InfoTemplate("${Name}", "${Form}"),
-        infoSymbol =  new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 10),
+        infoSymbol =  new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 25),
         form = "<form><span>Here will go some info</span><br /<label for='test'>Test</label><input id='test' type='checkbox' name='test' value='test'><br /><label for='test'>Test</label><input id='test' type='checkbox' name='test' value='test'><br /><label for='test'>Test</label><input id='test' type='checkbox' name='test' value='test'><br /><label for='test'>Test</label><input id='test' type='checkbox' name='test' value='test'></form>",
         point = new esri.Graphic({
             "geometry": {
