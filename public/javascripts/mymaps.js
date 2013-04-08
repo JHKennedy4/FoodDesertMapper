@@ -68,7 +68,7 @@ function init() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
     }
-    map.infoWindow.resize(300,500);
+    map.infoWindow.resize(280,300);
 }
 
 dojo.addOnLoad(init);
