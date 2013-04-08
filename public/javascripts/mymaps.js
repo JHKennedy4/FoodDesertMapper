@@ -28,8 +28,9 @@ function locationError(error) {
 
 function addPoint(store) {
 	console.log(store.store_name);
-    var infoTemplate = new esri.InfoTemplate("${Name}"),
-	infoSymbol =  new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10),
+    var infoTemplate = new esri.InfoTemplate("${Name}","${Form}"),
+	    infoSymbol =  new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10),
+        form = "<form><label for='test'>Test</label><input id='test' type='checkbox' name='test' value='test'></form>",
         point = new esri.Graphic({
             "geometry": {
                 "x": store.longitude,
@@ -37,7 +38,8 @@ function addPoint(store) {
                 "spatialReference": {"wkid": 4326}
             },
             "attributes": {
-                "Name": store.store_name
+                "Name": store.store_name,
+                "Form": form
             }
         });
     point.setSymbol(infoSymbol);
