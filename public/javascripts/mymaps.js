@@ -30,7 +30,7 @@ function addPoint(store) {
 	console.log(store.store_name);
     var infoTemplate = new esri.InfoTemplate("${Name}", "${Form}"),
         infoSymbol =  new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 18, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([158, 158, 158]), 5), new dojo.Color([255, 175, 0])),
-        form = "<form><h3>Share what's available:</h3><input id='grain' type='checkbox' name='grain' value='true'><label for='grain'>Grains, Bread, Cereals</label><br /><input id='veg' type='checkbox' name='veg' value='true'><label for='veg'>Vegetables: fresh, canned, or frozen</label><br /><input id='fruit' type='checkbox' name='fruit' value='true'><label for='fruit'>Fruits: whole fruits and fruit juices</label><br /><input id='milk' type='checkbox' name='milk' value='true'><label for='milk'>Milk Products: milk, cheese, yogurt, etc.</label><br /><input id='meat' type='checkbox' name='meat' value='true'><label for='meat'>Meat, Beans, Nuts, Eggs</label><br /><input type='submit' name='Submit' value='Submit'></form>",
+        form = "<form><h3>Share what's available:</h3><input id='grain' type='checkbox' name='grain' value='true'><label for='grain'>Grains, Bread, Cereals</label><br /><input id='veg' type='checkbox' name='veg' value='true'><label for='veg'>Vegetables: fresh, canned, or frozen</label><br /><input id='fruit' type='checkbox' name='fruit' value='true'><label for='fruit'>Fruits: whole fruits and fruit juices</label><br /><input id='milk' type='checkbox' name='milk' value='true'><label for='milk'>Milk Products: milk, cheese, yogurt, etc.</label><br /><input id='meat' type='checkbox' name='meat' value='true'><label for='meat'>Meat, Beans, Nuts, Eggs</label><br /><br /><input type='submit' name='Submit' value='Submit'></form>",
         point = new esri.Graphic({
             "geometry": {
                 "x": store.longitude,
@@ -68,7 +68,7 @@ function init() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
     }
-    map.infoWindow.resize(280,200);
+    map.infoWindow.resize(280,210);
 }
 
 dojo.addOnLoad(init);
