@@ -30,7 +30,7 @@ function addPoint(store) {
 	console.log(store.store_name);
     var infoTemplate = new esri.InfoTemplate("${Name}", "${Form}"),
         infoSymbol =  new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 10),
-        form = "<form><p>Here will go some info</p><label for='test'>Test</label><input id='test' type='checkbox' name='test' value='test'></form>",
+        form = "<form><span>Here will go some info</span><label for='test'>Test</label><input id='test' type='checkbox' name='test' value='test'><label for='test'>Test</label><input id='test' type='checkbox' name='test' value='test'><label for='test'>Test</label><input id='test' type='checkbox' name='test' value='test'><label for='test'>Test</label><input id='test' type='checkbox' name='test' value='test'></form>",
         point = new esri.Graphic({
             "geometry": {
                 "x": store.longitude,
