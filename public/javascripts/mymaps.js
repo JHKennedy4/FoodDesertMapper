@@ -71,8 +71,4 @@ function init() {
     map.infoWindow.resize(275, 215);
 }
 
-require("dojo/ready", function (ready) {
-    ready(function () {
-        init();
-    });
-});
+dojo.addOnLoad(init);
