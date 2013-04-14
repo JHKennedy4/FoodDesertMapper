@@ -27,7 +27,7 @@ function locationError(error) {
 }
 
 function addPoint(store) {
-	console.log(store.store_name);
+	console.log(store);
     var infoTemplate = new esri.InfoTemplate("${Name}", "${Form}"),
         infoSymbol =  new esri.symbol.SimpleMarkerSymbol(
                 esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 18,
