@@ -27,7 +27,6 @@ function locationError(error) {
 }
 
 function addPoint(store) {
-	console.log(store);
     var infoTemplate = new esri.InfoTemplate("${Name}", "${Form}"),
         infoSymbol =  new esri.symbol.SimpleMarkerSymbol(
                 esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 18,
@@ -35,7 +34,7 @@ function addPoint(store) {
                     esri.symbol.SimpleLineSymbol.STYLE_SOLID,
                     new dojo.Color([158, 158, 158]), 5),
                 new dojo.Color([255, 175, 0])),
-        form = "<form method='GET' action='/update/" + store._id + "'>" + 
+        form = "<form method='GET' action='/update/" + store.cartodb_id + "'>" + 
             "<h3>Share what's available:</h3>" +
             "<input id='grain' type='checkbox' name='grain'>" +
             "<label for='grain'>Grains, Bread, Cereals</label>" +
