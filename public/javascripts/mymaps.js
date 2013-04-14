@@ -88,9 +88,11 @@ function init() {
     }).fail(function () {
         alert("failasaurous-rex");
     });
+    /*
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
     }
+    */
     map.infoWindow.resize(275, 215);
 }
 
