@@ -83,7 +83,7 @@ app.get('/store/:id', function (req, res) {
         console.log("id fail");
     });
     client.on('data', function (data) {
-        res.send(data.rows[0]);
+        res.send(data.rows);
     });
 });
 
