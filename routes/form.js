@@ -5,5 +5,9 @@
 
 exports.form = function (req, res) {
     // got rid of jade, need to fix for ejs
-    res.render('form', { title: 'EJS Works!' });
+    var id = req.params.id;
+    client.query("select * from monroecountysnap where cartodb_id = " + id,
+            function (err, data) {
+                res.render('form', { store: data });
+            });
 };
