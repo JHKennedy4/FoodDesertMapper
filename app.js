@@ -52,9 +52,11 @@ app.configure('development', function () {
 });
 
 app.get('/', routes.index);
-app.get('/form', form.form);
+
+app.get('/edit/:id', form.form);
+
 // get the "resource" stores
-app.get('/stores',  function (req, res) {
+app.get('/store',  function (req, res) {
     client.query("select * from monroecountysnap", function (err, data) {
         res.send(data);
     });
@@ -67,7 +69,7 @@ app.get('/stores',  function (req, res) {
     });
     */
 });
-app.get('/stores/:id', function (req, res) {
+app.get('/store/:id', function (req, res) {
     var id = req.params.id;
     client.query("select * from monroecountysnap where cartodb_id = " + id);
     client.on('error', function (error) {
@@ -77,7 +79,7 @@ app.get('/stores/:id', function (req, res) {
         res.send(data);
     });
 });
-    
+
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
     console.log("http://127.0.0.1:" + app.get('port'));

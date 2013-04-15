@@ -34,8 +34,20 @@ function addPoint(store) {
                     esri.symbol.SimpleLineSymbol.STYLE_SOLID,
                     new dojo.Color([158, 158, 158]), 5),
                 new dojo.Color([255, 175, 0])),
-        form = "<form method='GET' action='/update/" + store.cartodb_id + "'>" + 
+        form = "<form method='GET' action='/update/" + store.cartodb_id + "'>" +
             "<h3>Share what's available:</h3>" +
+            "<input id='bread' type='checkbox' name='bread'>" +
+            "<label for='bread'>Whole grain breads, rice, pasta, and pastries (including whole grain flours)</label>" +
+            "<br />" +
+            "<input id='cereal' type='checkbox' name='cereal'>" +
+            "<label for='cereal'>Whole grain cereals (including hot cereal mixes)</label>" +
+            "<br />" +
+            "<input id='grain' type='checkbox' name='grain'>" +
+            "<label for='grain'>Grains, Bread, Cereals</label>" +
+            "<br />" +
+            "<input id='grain' type='checkbox' name='grain'>" +
+            "<label for='grain'>Grains, Bread, Cereals</label>" +
+            "<br />" +
             "<input id='grain' type='checkbox' name='grain'>" +
             "<label for='grain'>Grains, Bread, Cereals</label>" +
             "<br />" +
