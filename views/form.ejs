@@ -30,18 +30,21 @@
     </script>
     </head>
     <body>
-        <form method='GET' action='/update/<%=cartodb_id%>'>
-            <h3>Share what's available at <%= store_name %>:</h3>
+        <form method='GET' action='/update/'<%= cartodb_id %>>
+            <h2>Share what's available at <%= store_name %>:</h2>
+            <span><%= address %>, <%= city %>, <%= state %></span>
+            <h4>Grains</h4>
             <input id='bread' type='checkbox' name='bread'>
             <label for='bread'>Whole grain breads, rice, pasta, and pastries (including whole grain flours)</label>
             <br />
             <input id='cereal' type='checkbox' name='cereal'>
             <label for='cereal'>Whole grain cereals (including hot cereal mixes)</label>
             <br />
-            <input id='grain' type='checkbox' name='grain'>
-            <label for='grain'>Grains, Bread, Cereals</label>
+            <input id='popcorn' type='checkbox' name='popcorn'>
+            <label for='popcorn'>Popcorn and other whole grain snacks</label>
             <br />
-            <input id='grain' type='checkbox' name='grain'>
+            <h4>Vegetables</h4>
+            <input id='' type='checkbox' name='grain'>
             <label for='grain'>Grains, Bread, Cereals</label>
             <br />
             <input id='grain' type='checkbox' name='grain'>
