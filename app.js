@@ -56,7 +56,7 @@ app.get('/', routes.index);
 app.get('/edit/:id', form.form);
 
 // get the "resource" stores
-app.get('/store',  function (req, res) {
+app.get('/stores',  function (req, res) {
     client.query("select * from monroecountysnap", function (err, data) {
         res.send(data);
     });
