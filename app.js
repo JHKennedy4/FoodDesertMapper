@@ -58,8 +58,7 @@ app.get('/edit/:id', function (req, res) {
     var id = req.params.id;
     client.query("select * from monroecountysnap where cartodb_id = " + id,
             function (err, data) {
-                var storeJSON = JSON.stringify(data.rows[0]);
-                res.render('form', { store: storeJSON });
+                res.render('form', data.rows[0]);
             });
 }); //form.form);
 
