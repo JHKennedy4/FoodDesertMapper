@@ -27,45 +27,13 @@ function locationError(error) {
 }
 
 function addPoint(store) {
-    var infoTemplate = new esri.InfoTemplate("${Name}", "${Form}"),
+    var infoTemplate = new esri.InfoTemplate("${Name}", "${Edit}"),
         infoSymbol =  new esri.symbol.SimpleMarkerSymbol(
                 esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 18,
                 new esri.symbol.SimpleLineSymbol(
                     esri.symbol.SimpleLineSymbol.STYLE_SOLID,
                     new dojo.Color([158, 158, 158]), 5),
                 new dojo.Color([255, 175, 0])),
-        form = "<form method='GET' action='/update/" + store.cartodb_id + "'>" +
-            "<h3>Share what's available:</h3>" +
-            "<input id='bread' type='checkbox' name='bread'>" +
-            "<label for='bread'>Whole grain breads, rice, pasta, and pastries (including whole grain flours)</label>" +
-            "<br />" +
-            "<input id='cereal' type='checkbox' name='cereal'>" +
-            "<label for='cereal'>Whole grain cereals (including hot cereal mixes)</label>" +
-            "<br />" +
-            "<input id='grain' type='checkbox' name='grain'>" +
-            "<label for='grain'>Grains, Bread, Cereals</label>" +
-            "<br />" +
-            "<input id='grain' type='checkbox' name='grain'>" +
-            "<label for='grain'>Grains, Bread, Cereals</label>" +
-            "<br />" +
-            "<input id='grain' type='checkbox' name='grain'>" +
-            "<label for='grain'>Grains, Bread, Cereals</label>" +
-            "<br />" +
-            "<input id='veg' type='checkbox' name='veg' >" +
-            "<label for='veg'>Vegetables: fresh, canned, or frozen</label>" +
-            "<br />" +
-            "<input id='fruit' type='checkbox' name='fruit' >" +
-            "<label for='fruit'>Fruits: whole fruits and fruit juices</label>" +
-            "<br />" +
-            "<input id='milk' type='checkbox' name='milk' >" +
-            "<label for='milk'>Milk Products: milk, cheese, yogurt, etc.</label>" +
-            "<br />" +
-            "<input id='meat' type='checkbox' name='meat' >" +
-            "<label for='meat'>Meat, Beans, Nuts, Eggs</label>" +
-            "<br />" +
-            "<br />" +
-            "<input type='submit' name='Submit'>" +
-            "</form>",
         point = new esri.Graphic({
             "geometry": {
                 "x": store.longitude,
@@ -74,7 +42,7 @@ function addPoint(store) {
             },
             "attributes": {
                 "Name": store.store_name,
-                "Form": form
+                "Edit": "<a href='/edit/" + store.cartodb_id + "'>Edit</a>"
             }
         });
     point.setSymbol(infoSymbol);

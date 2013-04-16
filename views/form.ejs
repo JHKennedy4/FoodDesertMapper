@@ -26,49 +26,10 @@
 	-->
 
     <script>
-        console.log("<%= store_name %>");
     </script>
     </head>
     <body>
-        <form method='GET' action='/update/<%= cartodb_id %>'>
-            <h2>Share what's available at <%= store_name %>:</h2>
-            <input type='hidden' name='cartodb_id' value='<%= cartodb_id %>'>
-            <span><%= address %>, <%= city %>, <%= state %></span>
-            <h4>Grains</h4>
-            <input id='1' type='checkbox' name='1'>
-            <label for='1'>Whole grain breads, rice, pasta, and pastries (including whole grain flours)</label>
-            <br />
-            <input id='2' type='checkbox' name='2'>
-            <label for='2'>Whole grain cereals (including hot cereal mixes)</label>
-            <br />
-            <input id='3' type='checkbox' name='3'>
-            <label for='3'>Popcorn and other whole grain snacks</label>
-            <br />
-            <input id='4' type='checkbox' name='4'>
-            <label for='4'>Non-whole grain breads, cereals, rice, pasta, pies, pastries, snacks, and flours</label>
-            <br />
-            <h4>Vegetables</h4>
-            <input id='5' type='checkbox' name='5'>
-            <label for='5'>All potato products</label>
-            <br />
-            <input id='6' type='checkbox' name='6'>
-            <label for='6'></label>
-            <br />
-            <input id='veg' type='checkbox' name='veg' >
-            <label for='veg'>Vegetables: fresh, canned, or frozen</label>
-            <br />
-            <input id='fruit' type='checkbox' name='fruit' >
-            <label for='fruit'>Fruits: whole fruits and fruit juices</label>
-            <br />
-            <input id='milk' type='checkbox' name='milk' >
-            <label for='milk'>Milk Products: milk, cheese, yogurt, etc.</label>
-            <br />
-            <input id='meat' type='checkbox' name='meat' >
-            <label for='meat'>Meat, Beans, Nuts, Eggs</label>
-            <br />
-            <br />
-            <input type='submit' name='Submit'>
-            </form>
+        <%- form %>
     </body>
 </html>
     
