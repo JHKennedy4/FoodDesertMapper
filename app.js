@@ -55,11 +55,17 @@ app.get('/', routes.index);
 
 app.get('/edit/:id', function (req, res) {
     // got rid of jade, need to fix for ejs
-    var id = req.params.id;
+    var id = req.params.id,
+        store;
     client.query("select * from monroecountysnap where cartodb_id = " + id,
-            function (err, data) {
-                res.render('form', data.rows[0]);
-            });
+        function (err, data) {
+            store = data.rows[0];
+        })
+    .query("select * from foodvalues",
+        function (err, data) {
+            res.render('form', store);
+        });
+
 }); //form.form);
 
 // get the "resource" stores
