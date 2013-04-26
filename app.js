@@ -54,7 +54,12 @@ app.configure('development', function () {
     app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
+app.get('/', function (req, res) {
+    client.query("select * from monroecountysnap", function (err, data) {
+        res.locals.stores = data.rows;
+        res.render('index', { title: 'Rochester Food Desert Mapper' });
+    });
+});
 
 function buildform(store, foodvals) {
     var doc = new xmljs.Document(),

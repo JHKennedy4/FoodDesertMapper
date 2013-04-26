@@ -3,7 +3,10 @@
  * GET home page.
  */
 
-exports.index = function (req, res) {
-    // got rid of jade, need to fix
-    res.render('index', { title: 'Rochester Food Desert Mapper' });
+exports.index = function (req, res, client) {
+    client.query("select * from monroecountysnap", function (err, data) {
+        res.locals.stores = data.rows;
+        res.render('index', { title: 'Rochester Food Desert Mapper' });
+    });
+
 };
