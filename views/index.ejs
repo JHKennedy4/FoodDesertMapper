@@ -7,6 +7,13 @@
 
 	<link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
 	<link rel="stylesheet" href="/stylesheets/style.css">
+    <script>
+        var ua = navigator.userAgent.toLowerCase();
+        var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+        if(isAndroid) {
+            window.L_DISABLE_3D = true;
+        }
+    </script>
 
     <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>	
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
