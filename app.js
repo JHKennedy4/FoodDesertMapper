@@ -55,10 +55,11 @@ app.configure('development', function () {
 });
 
 app.get('/', function (req, res) {
-    client.query("select * from monroecountysnap", function (err, data) {
-        res.locals.stores = data.rows;
+    //client.query("select cartodb_id, the_geom_webmercator from snap", function (err, data) {
+        console.log("returned from select");
+        //res.locals.stores = data.rows;
         res.render('index', { title: 'Rochester Food Desert Mapper' });
-    });
+    //});
 });
 
 function buildform(store, foodvals) {
@@ -115,7 +116,7 @@ app.get('/edit/:id', function (req, res) {
     // got rid of jade, need to fix for ejs
     var id = req.params.id,
         storeData;
-    client.query("select * from monroecountysnap where cartodb_id = " + id,
+    client.query("select * from snap where cartodb_id = " + id,
         function (err, data) {
             storeData = data.rows[0];
             //console.log(store);
@@ -130,7 +131,7 @@ app.get('/edit/:id', function (req, res) {
 
 // get the "resource" stores
 app.get('/stores',  function (req, res) {
-    client.query("select * from monroecountysnap", function (err, data) {
+    client.query("select * from snap", function (err, data) {
         res.send(data);
     });
     /*
