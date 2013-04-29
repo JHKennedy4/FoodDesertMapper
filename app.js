@@ -55,11 +55,8 @@ app.configure('development', function () {
 });
 
 app.get('/', function (req, res) {
-    //client.query("select cartodb_id, the_geom_webmercator from snap", function (err, data) {
-        console.log("returned from select");
-        //res.locals.stores = data.rows;
-        res.render('index', { title: 'Rochester Food Desert Mapper' });
-    //});
+    console.log("returned from select");
+    res.render('index', { title: 'Rochester Food Desert Mapper' });
 });
 
 function buildform(store, foodvals) {
@@ -112,22 +109,18 @@ function buildform(store, foodvals) {
     return doc.toString();
 }
 
-app.get('/edit/:id', function (req, res) {
-    // got rid of jade, need to fix for ejs
+app.get('/rate/:id', function (req, res) {
     var id = req.params.id,
         storeData;
-    client.query("select * from snap where cartodb_id = " + id,
-        function (err, data) {
+    client.query("select * from snap where cartodb_id =  " + id, function (err, data) {
             storeData = data.rows[0];
-            //console.log(store);
-        })
-    .query("select * from foodvalues order by cartodb_id",
-        function (err, data) {
-            res.locals.form = buildform(storeData, data.rows);
-            res.render('form');
+            client.query("select * from foodvalues order by cartodb_id",
+                function (err, data) {
+                    res.locals.form = buildform(storeData, data.rows);
+                    res.render('form');
+                });
         });
-
-}); //form.form);
+});
 
 // get the "resource" stores
 app.get('/stores',  function (req, res) {

@@ -24,11 +24,14 @@ function main() {
             cartodb.createLayer(F.map, layerUrl, layerOptions)
                 .on('done', function (layer) {
                     console.log("adding layer");
+                    console.log(layer);
                     F.map.addLayer(layer);
                     layer.infowindow.set('template', $('#infowindow_template').html());
-            }).on('error', function (err) {
-                console.log("Error: " + err);
-            });
+                    layer.infowindow.addField('cartodb_id');
+                })
+                .on('error', function (err) {
+                    console.log("Error: " + err);
+                });
 
         });
     }
