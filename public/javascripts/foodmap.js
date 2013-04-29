@@ -5,7 +5,7 @@ function main() {
         navigator.geolocation.getCurrentPosition(function (position) {
             F.map = new L.map('map', {
                 center: new L.LatLng(position.coords.latitude, position.coords.longitude),
-                zoom: 14
+                zoom: 16
             });
 
             F.map.addLayer(baseMap);
