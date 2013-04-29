@@ -37,4 +37,4 @@ function main() {
     }
 }
 
-window.onload = main;
+$(document).ready(main());
