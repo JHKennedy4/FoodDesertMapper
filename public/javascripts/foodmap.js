@@ -1,4 +1,4 @@
-var baseMap =  new L.StamenTileLayer("toner");
+var baseMap =  new L.StamenTileLayer("watercolor");
 
 function main() {
     if (navigator.geolocation) {
