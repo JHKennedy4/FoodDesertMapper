@@ -126,6 +126,11 @@ app.get('/update/:id', function (req, res) {
 
     console.log(id);
     console.log(query);
+
+    // Respond
+    res.statusCode = 301;
+    res.header('Location', "http://food-desert-mapper.jhk.me/?success=true");
+    res.end("<p>Redirecting, betches</p>");
 });
 
 // get the "resource" stores
