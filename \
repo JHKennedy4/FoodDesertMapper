@@ -43,7 +43,7 @@
                     <!-- content.data contains the field info -->
                     <h4>Store: </h4>
                     <h2>{{content.data.store_name}}</h2>
-                    <a class="btn" href='/rate/{{content.data.cartodb_id}}'>Rate this Market</a>
+                    <a href='/rate/{{content.data.cartodb_id}}'>Rate this Market</a>
                 </div>
             </div>
             <div class="cartodb-popup-tip-container"></div>
