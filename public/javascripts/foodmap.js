@@ -1,4 +1,4 @@
-var baseMap =  new L.StamenTileLayer("toner");
+var baseMap =  new L.StamenTileLayer("watercolor");
 
 function main() {
     if (navigator.geolocation) {
@@ -40,7 +40,7 @@ function main() {
                     layer.setCartoCSS("#snap { " +
                         "marker-file:url('http://food-desert-mapper.jhk.me/bootstrap/carts.svg');" +
                         //"marker-opacity: 1; " +
-                        //"marker-width: 40; " +
+                        "marker-width: 35; " +
                         //"marker-line-color: white; " +
                         //"marker-line-width: 3; " +
                         //"marker-line-opacity: 0.9; " +
