@@ -39,11 +39,11 @@ function main() {
                     F.map.addLayer(layer);
                     layer.setCartoCSS("#snap { " +
                         "marker-file:url('http://food-desert-mapper.jhk.me/carticon.svg');" +
-                        "marker-opacity: 1; " +
-                        "marker-width: 40; " +
-                        "marker-line-color: white; " +
-                        "marker-line-width: 3; " +
-                        "marker-line-opacity: 0.9; " +
+                        //"marker-opacity: 1; " +
+                        //"marker-width: 40; " +
+                        //"marker-line-color: white; " +
+                        //"marker-line-width: 3; " +
+                        //"marker-line-opacity: 0.9; " +
                         "marker-placement: point; " +
                         //"marker-type: ellipse; " +
                         "marker-allow-overlap: false; }");
