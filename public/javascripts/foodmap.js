@@ -37,7 +37,16 @@ function main() {
                     console.log("adding layer");
                     console.log(layer);
                     F.map.addLayer(layer);
-		    layer.setCartoCSS("#{{span}}{ marker-file:url('cart.png');");
+                    layer.setCartoCSS("#snap { " +
+                        "marker-file:url('http://food-desert-mapper.jhk.me/cart.svg');" +
+                        "marker-opacity: 1; " +
+                        "marker-width: 40; " +
+                        "marker-line-color: white; " +
+                        "marker-line-width: 3; " +
+                        "marker-line-opacity: 0.9; " +
+                        "marker-placement: point; " +
+                        //"marker-type: ellipse; " +
+                        "marker-allow-overlap: false; }");
                     layer.infowindow.set('template', $('#infowindow_template').html());
                     layer.infowindow.addField('cartodb_id');
                 })
