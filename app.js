@@ -137,9 +137,9 @@ app.get('/update/:id', function (req, res) {
     */
 
     // Respond
-    this.statusCode = 301;
-    this.header('Location', "http://food-desert-mapper.jhk.me/?success=true");
-    this.end("<p>Redirecting, betches</p>");
+    res.statusCode = 301;
+    res.header('Location', "http://food-desert-mapper.jhk.me/?success=true");
+    res.end("<p>Redirecting, betches</p>");
 });
 
 // get the "resource" stores
