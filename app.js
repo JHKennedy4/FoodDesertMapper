@@ -8,10 +8,12 @@ var express = require('express'),
     stores = require('./routes/stores'),
     form = require('./routes/form'),
     http = require('http'),
+    url = require('url'),
     CartoDB = require('cartodb'),
     path = require('path'),
     fs =  require('fs'),
     xmljs = require('libxmljs'),
+    querystring = require('querystring'),
     secret;
 
 // make localhost and heroku happy
@@ -63,18 +65,12 @@ function buildform(store, foodvals) {
     var doc = new xmljs.Document(),
         i,
         form = doc.node("form").attr({
-            method: 'GET',
+            method: 'POST',
             action: '/update/' + store.cartodb_id
         });
     form.node('h2', "Share what's available at " + store.store_name);
-    form.node('input').attr({
-        type: "hidden",
-        name: "cartodb_id",
-        value: store.cartodb_id
-    });
 
     //<h2>Share what's available at <%- name %>:</h2>
-    //"<form method='GET' action='/update/" + store.cartodb_id + "'>",
     for (i = 0; i < foodvals.length; i = i + 1) {
         switch (i) {
         case 0 :
@@ -120,6 +116,16 @@ app.get('/rate/:id', function (req, res) {
                     res.render('form');
                 });
         });
+});
+
+app.get('/update/:id', function (req, res) {
+    var id = req.params.id,
+        url_parts = url.parse(req.url, true),
+        query = url_parts.query,
+        qObj;
+
+    console.log(id);
+    console.log(query);
 });
 
 // get the "resource" stores
