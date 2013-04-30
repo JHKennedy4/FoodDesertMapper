@@ -126,15 +126,6 @@ app.get('/update/:id', function (req, res) {
 
     console.log(id);
     console.log(query);
-    /*
-    if (req.accepts('html')) {
-        body = '<p>' + http.STATUS_CODES[status] + '. Redirecting to <a href="' + url + '">' + url + '</a></p>';
-        this.header('Content-Type', 'text/html');
-    } else {
-        body = http.STATUS_CODES[status] + '. Redirecting to ' + url;
-        this.header('Content-Type', 'text/plain');
-    }
-    */
 
     // Respond
     res.statusCode = 301;
