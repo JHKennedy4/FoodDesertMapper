@@ -37,6 +37,7 @@ function main() {
                     console.log("adding layer");
                     console.log(layer);
                     F.map.addLayer(layer);
+		    layer.setCartoCSS("#{{span}}{ marker-file:url('cart.png');");
                     layer.infowindow.set('template', $('#infowindow_template').html());
                     layer.infowindow.addField('cartodb_id');
                 })
