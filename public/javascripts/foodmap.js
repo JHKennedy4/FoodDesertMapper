@@ -38,7 +38,7 @@ function main() {
                     console.log(layer);
                     F.map.addLayer(layer);
                     layer.setCartoCSS("#snap { " +
-                        "marker-file:url('http://food-desert-mapper.jhk.me/cart.svg');" +
+                        "marker-file:url('http://food-desert-mapper.jhk.me/realcart.svg');" +
                         //"marker-opacity: 1; " +
                         "marker-width: 35; " +
                         //"marker-line-color: white; " +
