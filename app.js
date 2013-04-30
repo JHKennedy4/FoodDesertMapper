@@ -67,40 +67,62 @@ function buildform(store, foodvals) {
         form = doc.node("form").attr({
             method: 'POST',
             action: '/update/' + store.cartodb_id
-        });
+        }),
+        div;
     form.node('h2', "Share what's available at " + store.store_name);
 
     //<h2>Share what's available at <%- name %>:</h2>
     for (i = 0; i < foodvals.length; i = i + 1) {
         switch (i) {
         case 0 :
-            form.node("h4", "Grains");
+            div = form.node("div").attr({
+                class: 'page1'
+            });
+            div.node("h4", "Grains");
             break;
+            div = form.node("div").attr({
+                class: 'page2'
+            });
         case 4 :
-            form.node("h4", "Vegetables");
+            div = form.node("div").attr({
+                class: 'page3'
+            });
+            div.node("h4", "Vegetables");
             break;
         case 9 :
-            form.node("h4", "Fruits");
+            div = form.node("div").attr({
+                class: 'page4'
+            });
+            div.node("h4", "Fruits");
             break;
         case 11 :
-            form.node("h4", "Milk Products");
+            div = form.node("div").attr({
+                class: 'page5'
+            });
+            div.node("h4", "Milk Products");
             break;
         case 15 :
-            form.node("h4", "Meat and beans");
+            div = form.node("div").attr({
+                class: 'page6'
+            });
+            div.node("h4", "Meat and beans");
             break;
         case 21 :
-            form.node("h4", "Other foods");
+            div = form.node("div").attr({
+                class: 'page7'
+            });
+            div.node("h4", "Other foods");
             break;
         }
-        form.node('input').attr({
+        div.node('input').attr({
             type: "checkbox",
             id: i + 1,
             name: i + 1
         });
-        form.node('label', foodvals[i].description).attr({
+        div.node('label', foodvals[i].description).attr({
             for: i + 1
         });
-        form.node('br');
+        div.node('br');
     }
     return doc.toString();
 }
