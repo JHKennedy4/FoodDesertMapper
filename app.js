@@ -80,36 +80,33 @@ function buildform(store, foodvals) {
             });
             div.node("h4", "Grains");
             break;
-            div = form.node("div").attr({
-                class: 'page2'
-            });
         case 4 :
             div = form.node("div").attr({
-                class: 'page3'
+                class: 'page2'
             });
             div.node("h4", "Vegetables");
             break;
         case 9 :
             div = form.node("div").attr({
-                class: 'page4'
+                class: 'page3'
             });
             div.node("h4", "Fruits");
             break;
         case 11 :
             div = form.node("div").attr({
-                class: 'page5'
+                class: 'page4'
             });
             div.node("h4", "Milk Products");
             break;
         case 15 :
             div = form.node("div").attr({
-                class: 'page6'
+                class: 'page5'
             });
             div.node("h4", "Meat and beans");
             break;
         case 21 :
             div = form.node("div").attr({
-                class: 'page7'
+                class: 'page6'
             });
             div.node("h4", "Other foods");
             break;
