@@ -9,6 +9,10 @@ a {
   color: #00B7FF;
 }
 
+form {
+    margin: 5px;
+}
+
 #map {
   padding: 0px;
   margin: 0px;
