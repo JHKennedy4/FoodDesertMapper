@@ -65,7 +65,7 @@ function buildform(store, foodvals) {
     var doc = new xmljs.Document(),
         i,
         form = doc.node("form").attr({
-            method: 'POST',
+            method: 'GET',
             action: '/update/' + store.cartodb_id
         }),
         div;
