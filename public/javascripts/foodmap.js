@@ -17,9 +17,8 @@ function main() {
             F.map.addLayer(baseMap);
 
             // options for the AwesomeMarker
-            userMarker = L.AwesomeMarkers.icon({
-                icon: 'icon-user',
-                color: 'red'
+            userMarker = L.icon({
+                iconUrl: '/bootstrap/here.svg'
             });
 
             // create an AwesomeMarker at the user location
@@ -39,7 +38,7 @@ function main() {
                     F.map.addLayer(layer);
                     layer.setCartoCSS("#snap { " +
                         "marker-file:url('http://food-desert-mapper.jhk.me/bootstrap/shopping.svg');" +
-                        "marker-opacity: 0.8; " +
+                        "marker-opacity: 0.9; " +
                         //"marker-width: 35; " +
                         //"marker-line-color: white; " +
                         //"marker-line-width: 3; " +
