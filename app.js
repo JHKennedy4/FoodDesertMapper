@@ -93,7 +93,7 @@ function buildform(store, foodvals) {
         i,
         form = doc.node("form").attr({
             method: 'GET',
-            action: '/update/' + store.cartodb_id
+            action: '/insert/' + store.cartodb_id
         }),
         div;
     form.node('h2', "Share what's available at " + store.store_name);
@@ -231,14 +231,16 @@ app.get('/rate/:id', function (req, res) {
         });
 });
 
-app.get('/update/:id', function (req, res) {
+app.get('/insert/:id', function (req, res) {
     var id = req.params.id,
         url_parts = url.parse(req.url, true),
         query = url_parts.query,
-        qObj;
+        cartoquery = 'insert into scores values (',
+        keys = Object.keys(query);
+
 
     console.log(id);
-    console.log(query);
+    console.log(keys);
 
     // Respond
     res.statusCode = 301;
