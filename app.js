@@ -213,6 +213,7 @@ function buildform(store, foodvals) {
     div.node('input').attr({
         type: 'submit',
         name: 'Submit',
+		value: 'Submit',
         class: 'btn'
     });
     return doc.toString();
