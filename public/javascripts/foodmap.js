@@ -18,15 +18,10 @@ function main() {
 
             // options for the AwesomeMarker
             userMarker = L.icon({
-<<<<<<< HEAD
                 iconUrl: '/bootstrap/here.svg',
                 iconSize:     [38, 95], // size of the icon
                 iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
                 popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-=======
-                iconUrl: '/bootstrap/here.svg'
-				
->>>>>>> de0960b5a345acbd405a5cfcd3461655ba39bb5a
             });
 
             // create an AwesomeMarker at the user location
