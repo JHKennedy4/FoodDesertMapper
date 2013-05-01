@@ -57,9 +57,36 @@ app.configure('development', function () {
 });
 
 app.get('/', function (req, res) {
-    console.log("returned from select");
+    res.render('splash');
+});
+
+app.get('/map', function (req, res) {
     res.render('index', { title: 'Rochester Food Desert Mapper' });
 });
+
+function buildInput(div, na, qu, label) {
+    div.node('label', label).attr({
+        for: qu + ":"
+    });
+    div.node('br');
+    div.node('label', "$").attr({
+        for: na
+    });
+    div.node('input').attr({
+        type: "text",
+        name: na,
+        id: na
+    });
+    div.node('span', "/");
+
+    div.node('input').attr({
+        type: "text",
+        name: qu,
+        id: qu
+    });
+    div.node('br');
+
+}
 
 function buildform(store, foodvals) {
     var doc = new xmljs.Document(),
@@ -75,36 +102,98 @@ function buildform(store, foodvals) {
     for (i = 0; i < foodvals.length; i = i + 1) {
         switch (i) {
         case 0 :
+            // begin page 1
+            div = form.node("p", "Please take the time to fill out this form as completely as you can. The data you collect will help neighbors, researchers, and policy makers learn more about food availability in your community");
             div = form.node("div").attr({
                 class: 'page1'
             });
             div.node("h4", "Grains");
             break;
         case 4 :
+            // what? you want bread? here's your damn bread
+            div.node('label', "$").attr({
+                for: 'wheat'
+            });
+            div.node('input').attr({
+                type: "text",
+                name: 'wheat',
+                id: 'wheat'
+            });
+            div.node('span', " price per wheat loaf");
+            div.node('br');
+
+            // next you're gonna tell me you want white bread. fuck you
+            div.node('label', "$").attr({
+                for: 'white'
+            });
+            div.node('input').attr({
+                type: "text",
+                name: 'white',
+                id: 'white'
+            });
+            div.node('span', " price per white loaf");
+            div.node('br');
+
+            // now we begin page2
             div = form.node("div").attr({
                 class: 'page2'
             });
             div.node("h4", "Vegetables");
             break;
         case 9 :
+            buildInput(div, "carrots", "carweight", "Carrots - price per oz.");
+
+            // yay! page 3!
             div = form.node("div").attr({
                 class: 'page3'
             });
             div.node("h4", "Fruits");
             break;
         case 11 :
+            // is there fresh fruit?
+            div.node('input').attr({
+                type: "checkbox",
+                id: "freshfruit",
+                name: "freshfruit"
+            });
+            div.node('label', " Fresh fruit?").attr({
+                for: "freshfruit"
+            });
+            div.node('br');
+
+            buildInput(div, "apples", "numapples", "Apples - price per number");
+            buildInput(div, "bananas", "numbananas", "Bananas - price per number");
+            buildInput(div, "oj", "ojvol", "Orange Juice - price per oz.");
+            buildInput(div, "aj", "ajvol", "Apple Juice - price per oz.");
+
+            // let's go to page 4!
             div = form.node("div").attr({
                 class: 'page4'
             });
             div.node("h4", "Milk Products");
             break;
         case 15 :
+            buildInput(div, "milk", "milkvol", "Milk - price per oz.");
+
+            // welcome to page 5. Meat and beans ftw.
             div = form.node("div").attr({
                 class: 'page5'
             });
             div.node("h4", "Meat and beans");
             break;
         case 21 :
+            //eggs
+            div.node('label', "$").attr({
+                for: 'eggs'
+            });
+            div.node('input').attr({
+                type: "text",
+                name: 'eggs',
+                id: 'eggs'
+            });
+            div.node('span', " price per dozen eggs");
+            div.node('br');
+
             div = form.node("div").attr({
                 class: 'page6'
             });
@@ -121,6 +210,10 @@ function buildform(store, foodvals) {
         });
         div.node('br');
     }
+    div.node('input').attr({
+        type: 'submit',
+        name: 'Submit'
+    });
     return doc.toString();
 }
 
