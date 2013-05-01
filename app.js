@@ -103,7 +103,7 @@ function buildform(store, foodvals) {
         switch (i) {
         case 0 :
             // begin page 1
-            div = form.node("p", "Please take the time to fill out this form as completely as you can. The data you collect will help neighbors, researchers, and policy makers learn more about food availability in your community");
+            div = form.node("p", "Please take the time to fill out this form as completely as you can. The data you collect will help neighbors, researchers, and policy makers learn more about food availability in your community.");
             div = form.node("div").attr({
                 class: 'page1'
             });
@@ -212,7 +212,8 @@ function buildform(store, foodvals) {
     }
     div.node('input').attr({
         type: 'submit',
-        name: 'Submit'
+        name: 'Submit',
+        class: 'btn'
     });
     return doc.toString();
 }
@@ -241,7 +242,7 @@ app.get('/update/:id', function (req, res) {
 
     // Respond
     res.statusCode = 301;
-    res.header('Location', "http://food-desert-mapper.jhk.me/?success=true");
+    res.header('Location', "http://food-desert-mapper.jhk.me/map?success=true");
     res.end("<p>Redirecting, betches</p>");
 });
 
