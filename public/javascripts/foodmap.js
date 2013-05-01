@@ -41,7 +41,7 @@ function main() {
                     F.map.addLayer(layer);
                     layer.setCartoCSS("#snap { " +
                         "marker-file:url('http://food-desert-mapper.jhk.me/bootstrap/shopping.svg');" +
-                        "marker-opacity: 1.0; " +
+                        "marker-opacity: 1.0; " + "marker-transform:(0,15);"+
                         //"marker-width: 35; " +
                         //"marker-line-color: white; " +
                         //"marker-line-width: 3; " +
