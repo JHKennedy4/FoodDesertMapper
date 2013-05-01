@@ -19,6 +19,7 @@ function main() {
             // options for the AwesomeMarker
             userMarker = L.icon({
                 iconUrl: '/bootstrap/here.svg'
+				
             });
 
             // create an AwesomeMarker at the user location
@@ -42,7 +43,7 @@ function main() {
                         //"marker-width: 35; " +
                         //"marker-line-color: white; " +
                         //"marker-line-width: 3; " +
-                        //"marker-line-opacity: 0.9; " +
+                        //"marker-line-opacity: 1.0; " +
                         "marker-placement: point; " +
                         //"marker-type: ellipse; " +
                         "marker-allow-overlap: false; }");
