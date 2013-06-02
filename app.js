@@ -88,7 +88,7 @@ function buildInput(div, na, qu, label) {
 
 }
 
-function buildform(store, foodvals) {
+function buildform(store, foodvals, id) {
     var doc = new xmljs.Document(),
         i,
         form = doc.node("form").attr({
@@ -96,6 +96,11 @@ function buildform(store, foodvals) {
             action: '/insert/' + store.cartodb_id
         }),
         div;
+    form.node('input').attr({
+        type: "hidden",
+        name: "id",
+        value: id
+    });
     form.node('h2', "Share what's available at " + store.store_name);
 
     //<h2>Share what's available at <%- name %>:</h2>
@@ -116,7 +121,7 @@ function buildform(store, foodvals) {
             });
             div.node('input').attr({
                 type: "text",
-                name: 'wheat',
+                name: 'wheat_bread_price',
                 id: 'wheat'
             });
             div.node('span', " price per wheat loaf");
@@ -128,7 +133,7 @@ function buildform(store, foodvals) {
             });
             div.node('input').attr({
                 type: "text",
-                name: 'white',
+                name: 'white_bread_price',
                 id: 'white'
             });
             div.node('span', " price per white loaf");
@@ -141,7 +146,7 @@ function buildform(store, foodvals) {
             div.node("h4", "Vegetables");
             break;
         case 9 :
-            buildInput(div, "carrots", "carweight", "Carrots - price per oz.");
+            buildInput(div, "carrot_price", "carrot_weight", "Carrots - price per oz.");
 
             // yay! page 3!
             div = form.node("div").attr({
@@ -154,17 +159,17 @@ function buildform(store, foodvals) {
             div.node('input').attr({
                 type: "checkbox",
                 id: "freshfruit",
-                name: "freshfruit"
+                name: "is_fruit_fresh"
             });
             div.node('label', " Fresh fruit?").attr({
                 for: "freshfruit"
             });
             div.node('br');
 
-            buildInput(div, "apples", "numapples", "Apples - price per number");
-            buildInput(div, "bananas", "numbananas", "Bananas - price per number");
-            buildInput(div, "oj", "ojvol", "Orange Juice - price per oz.");
-            buildInput(div, "aj", "ajvol", "Apple Juice - price per oz.");
+            buildInput(div, "apple_price", "apple_quantity", "Apples - price per number");
+            buildInput(div, "banana_price", "banana_quantity", "Bananas - price per number");
+            buildInput(div, "orange_juice_price", "orange_juice_volume", "Orange Juice - price per oz.");
+            buildInput(div, "apple_juice_price", "apple_juice_volume", "Apple Juice - price per oz.");
 
             // let's go to page 4!
             div = form.node("div").attr({
@@ -173,7 +178,7 @@ function buildform(store, foodvals) {
             div.node("h4", "Milk Products");
             break;
         case 15 :
-            buildInput(div, "milk", "milkvol", "Milk - price per oz.");
+            buildInput(div, "milk_price", "milk_volume", "Milk - price per oz.");
 
             // welcome to page 5. Meat and beans ftw.
             div = form.node("div").attr({
@@ -188,7 +193,7 @@ function buildform(store, foodvals) {
             });
             div.node('input').attr({
                 type: "text",
-                name: 'eggs',
+                name: 'egg_price',
                 id: 'eggs'
             });
             div.node('span', " price per dozen eggs");
@@ -229,7 +234,7 @@ app.get('/rate/:id', function (req, res) {
             client.query("select * from foodvalues order by cartodb_id",
                 function (err, data) {
                     if (data) {
-                        res.locals.form = buildform(storeData, data.rows);
+                        res.locals.form = buildform(storeData, data.rows, id);
                         res.render('form');
                     }
                 });
@@ -239,22 +244,35 @@ app.get('/rate/:id', function (req, res) {
 // insert the rating data for 
 app.get('/insert/:id', function (req, res) {
 
-    debugger;
+    //debugger;
     var id = req.params.id,
         url_parts = url.parse(req.url, true),
         query = url_parts.query,
-        keys = Object.keys(query),
-        cartoquery = "insert into scores " + keys.toString() + " values (";
+        keys = "",
+        cartoquery,
+        i,
+        values;
 
-        //super vulnerable to injection
-        //needs sanitization
+    delete query.Submit;
+    for (i in query) {
+        keys += query[i] !== "" ? i + ", " : "";
+    }
 
-    client.query(cartoquery + id + ")", function (err, data) {
+    values = "";
+    for (i in query) {
+        values += query[i] !== "" ? query[i] + ", " : "";
+    }
+
+    keys = keys.replace(/(^\s*,)|(,\s*$)/g, '');
+    values = values.replace(/(^\s*,)|(,\s*$)/g, '');
+    console.log(keys);
+
+    cartoquery = "insert into scores (" + keys + ") values (";
+    client.query(cartoquery + values + ")", function (err, data) {
         if (!err) {
             console.log("no err");
             console.log(id);
             console.log(keys);
-            console.log(data.rows[0]);
         } else {
             console.log("error:");
             console.log(err);
