@@ -26,7 +26,7 @@ function loadMap() {
 
     // build map queries
     F.marketLayer = {};
-    $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator, store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ') LIMIT 1000'})
+    $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator, store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ') LIMIT 500'})
         .done(function (data) {
             console.log(data);
             F.marketLayer = L.geoJson(data, { pointToLayer: pointToLayer, onEachFeature: onEachFeature }).addTo(F.map);
@@ -46,7 +46,7 @@ function loadMap() {
     });
 
     F.map.on('moveend', function () {
-        $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator, store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ') LIMIT 1000'})
+        $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator, store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ') LIMIT 500'})
         .done(function (data) {
             console.log(data);
             F.marketLayer = L.geoJson(data, { pointToLayer: pointToLayer, onEachFeature: onEachFeature }).addTo(F.map);
