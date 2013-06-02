@@ -219,34 +219,52 @@ function buildform(store, foodvals) {
     return doc.toString();
 }
 
+// return the store rating form
 app.get('/rate/:id', function (req, res) {
     var id = req.params.id,
         storeData;
+
     client.query("select * from snap where cartodb_id =  " + id, function (err, data) {
             storeData = data.rows[0];
             client.query("select * from foodvalues order by cartodb_id",
                 function (err, data) {
-                    res.locals.form = buildform(storeData, data.rows);
-                    res.render('form');
+                    if (data) {
+                        res.locals.form = buildform(storeData, data.rows);
+                        res.render('form');
+                    }
                 });
         });
 });
 
+// insert the rating data for 
 app.get('/insert/:id', function (req, res) {
+
+    debugger;
     var id = req.params.id,
         url_parts = url.parse(req.url, true),
         query = url_parts.query,
-        cartoquery = 'insert into scores values (',
-        keys = Object.keys(query);
+        keys = Object.keys(query),
+        cartoquery = "insert into scores " + keys.toString() + " values (";
 
+        //super vulnerable to injection
+        //needs sanitization
 
-    console.log(id);
-    console.log(keys);
+    client.query(cartoquery + id + ")", function (err, data) {
+        if (!err) {
+            console.log("no err");
+            console.log(id);
+            console.log(keys);
+            console.log(data.rows[0]);
+        } else {
+            console.log("error:");
+            console.log(err);
+        }
+    });
 
     // Respond
     res.statusCode = 301;
-    res.header('Location', "http://food-desert-mapper.jhk.me/map?success=true");
-    res.end("<p>Redirecting, betches</p>");
+    //res.header('Location', "http://food-desert-mapper.jhk.me/map?success=true");
+    res.end("<p>Redirecting</p>");
 });
 
 // get the "resource" stores

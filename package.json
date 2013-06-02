@@ -8,7 +8,8 @@
   "dependencies": {
     "express": "3.1.0",
     "jade": "*",
-    "cartodb": "0.1"
+    "cartodb": "*",
+    "libxmljs": "*"
   },
   "engines": {
     "node": "0.8.14",
