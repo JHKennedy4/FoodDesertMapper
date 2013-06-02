@@ -245,15 +245,12 @@ function buildform(store, foodvals, id) {
         });
         div.node('br');
     }
-    div.node('div').attr({class: "form-actions"})
-        .node('button', "Submit").attr({
-            type: 'submit',
-            class: 'btn btn-primary'
-            /*
-            name: 'Submit',
-            value: 'Submit'
-            */
-        });
+    div.node('input').attr({
+        type: 'submit',
+        class: 'btn btn-primary',
+        name: 'Submit',
+        value: 'Submit'
+    });
     return doc.toString();
 }
 
@@ -288,31 +285,35 @@ app.get('/insert/:id', function (req, res) {
 
     delete query.Submit;
     for (i in query) {
-        keys += query[i] !== "" ? i + ", " : "";
+        if (query[i] === "") {
+            delete query[i];
+        }
     }
 
     values = "";
     for (i in query) {
-        values += query[i] !== "" ? query[i] + ", " : "";
+        values = values + "('" + i + "', '" + query[i] + "'), ";
     }
 
-    keys = keys.replace(/(^\s*,)|(,\s*$)/g, '');
     values = values.replace(/(^\s*,)|(,\s*$)/g, '');
-    console.log(keys);
 
-    cartoquery = "insert into scores (" + keys + ") values (";
-    client.query(cartoquery + values + ")", function (err, data) {
+    console.log(values);
+
+    cartoquery = "insert into scores (food, priceorpresence)" +
+        " values " + values;
+    client.query(cartoquery,
+        function (err, data) {
         if (!err) {
             console.log("no err");
             console.log(id);
             console.log(keys);
             res.statusCode = 301;
-            //res.header('Location', "http://food-desert-mapper.jhk.me/map?success=true");
+            res.header('Location', "http://www.foodmapper.us/map?success=true");
             res.end("<p>Redirecting</p>");
         } else {
             console.log("error:");
             console.log(err);
-            //res.header('Location', "http://food-desert-mapper.jhk.me/map?success=false");
+            res.header('Location', "http://www.foodmapper.us/map?success=false");
         }
     });
 
