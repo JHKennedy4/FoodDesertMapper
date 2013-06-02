@@ -77,12 +77,15 @@ function buildInput(div, na, qu, label) {
         name: na,
         id: na
     });
-    div.node('span', "/");
+    div.node('span', " per ");
 
-    div.node('input').attr({
-        type: "text",
+    // convert to a select statement
+    var select = div.node('select').attr({
         name: qu,
         id: qu
+    });
+    select.node('option', "8oz").attr({
+        value: '8'
     });
     div.node('br');
 
@@ -166,7 +169,7 @@ function buildform(store, foodvals, id) {
             });
             div.node('br');
 
-            buildInput(div, "apple_price", "apple_quantity", "Apples - price per number");
+            buildInput(div, "apple_price", "apple_quantity", "Apples - price per apple");
             buildInput(div, "banana_price", "banana_quantity", "Bananas - price per number");
             buildInput(div, "orange_juice_price", "orange_juice_volume", "Orange Juice - price per oz.");
             buildInput(div, "apple_juice_price", "apple_juice_volume", "Apple Juice - price per oz.");
@@ -273,16 +276,17 @@ app.get('/insert/:id', function (req, res) {
             console.log("no err");
             console.log(id);
             console.log(keys);
+            res.statusCode = 301;
+            //res.header('Location', "http://food-desert-mapper.jhk.me/map?success=true");
+            res.end("<p>Redirecting</p>");
         } else {
             console.log("error:");
             console.log(err);
+            //res.header('Location', "http://food-desert-mapper.jhk.me/map?success=false");
         }
     });
 
     // Respond
-    res.statusCode = 301;
-    //res.header('Location', "http://food-desert-mapper.jhk.me/map?success=true");
-    res.end("<p>Redirecting</p>");
 });
 
 // get the "resource" stores
@@ -301,7 +305,7 @@ app.get('/stores',  function (req, res) {
 });
 app.get('/store/:id', function (req, res) {
     var id = req.params.id;
-    client.query("select * from monroecountysnap where cartodb_id = " + id);
+    client.query("select * from snap where cartodb_id = " + id);
     client.on('error', function (error) {
         console.log("id fail");
     });
