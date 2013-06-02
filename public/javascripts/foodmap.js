@@ -11,7 +11,7 @@ function main() {
             // create a new map at your location
             F.map = new L.map('map', {
                 center: new L.LatLng(position.coords.latitude, position.coords.longitude),
-                zoom: 12
+                zoom: 15
             });
 
             // add the baseMap to the layer
@@ -31,7 +31,7 @@ function main() {
             //Suzanne's stupid code
 
             F.marketLayer = {};
-            $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ')'})
+            $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ') LIMIT 1000'})
                 .done(function (data) {
                     console.log(data);
                     F.marketLayer = L.geoJson(data).addTo(F.map);
@@ -51,7 +51,7 @@ function main() {
             });
 
             F.map.on('moveend', function () {
-                $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ')'})
+                $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator, store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ') LIMIT 1000'})
                     .done(function (data) {
                         console.log(data);
                         F.marketLayer = L.geoJson(data).addTo(F.map);
