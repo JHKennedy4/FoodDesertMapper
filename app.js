@@ -87,6 +87,21 @@ function buildInput(div, na, qu, label) {
     select.node('option', "8oz").attr({
         value: '8'
     });
+    select.node('option', "12oz").attr({
+        value: '12'
+    });
+    select.node('option', "16oz/1 lb/1 pt").attr({
+        value: '16'
+    });
+    select.node('option', "1 qt").attr({
+        value: '32'
+    });
+    select.node('option', "1/2 Gal").attr({
+        value: '64'
+    });
+    select.node('option', "Gallon").attr({
+        value: '128'
+    });
     div.node('br');
 
 }
@@ -169,7 +184,19 @@ function buildform(store, foodvals, id) {
             });
             div.node('br');
 
-            buildInput(div, "apple_price", "apple_quantity", "Apples - price per apple");
+            div.node('span', 'Apples');
+            div.node('br');
+            div.node('label', "$").attr({
+                for: 'apple'
+            });
+            div.node('input').attr({
+                type: "text",
+                name: 'apple_price',
+                id: 'apple'
+            });
+            div.node('span', " price per apple.");
+            div.node('br');
+
             buildInput(div, "banana_price", "banana_quantity", "Bananas - price per number");
             buildInput(div, "orange_juice_price", "orange_juice_volume", "Orange Juice - price per oz.");
             buildInput(div, "apple_juice_price", "apple_juice_volume", "Apple Juice - price per oz.");
@@ -218,12 +245,15 @@ function buildform(store, foodvals, id) {
         });
         div.node('br');
     }
-    div.node('input').attr({
-        type: 'submit',
-        name: 'Submit',
-		value: 'Submit',
-        class: 'btn'
-    });
+    div.node('div').attr({class: "form-actions"})
+        .node('button', "Submit").attr({
+            type: 'submit',
+            class: 'btn btn-primary'
+            /*
+            name: 'Submit',
+            value: 'Submit'
+            */
+        });
     return doc.toString();
 }
 
