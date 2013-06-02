@@ -14,12 +14,22 @@ function loadMap() {
         }
     }
 
-    //Suzanne's stupid code
+    function pointToLayer(feature) {
+    // change market icons
+        var marketMarker = L.AwesomeMarkers.icon({
+            icon: 'shopping-cart',
+            color:  'blue',
+        });
+
+        return L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {icon: marketMarker, riseOnHover: true});
+    }
+
+    // build map queries
     F.marketLayer = {};
     $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator, store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ') LIMIT 1000'})
         .done(function (data) {
             console.log(data);
-            F.marketLayer = L.geoJson(data, { onEachFeature: onEachFeature }).addTo(F.map);
+            F.marketLayer = L.geoJson(data, { pointToLayer: pointToLayer, onEachFeature: onEachFeature }).addTo(F.map);
         })
         .fail(function () {
             alert("fail");
@@ -39,7 +49,7 @@ function loadMap() {
         $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator, store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ') LIMIT 1000'})
         .done(function (data) {
             console.log(data);
-            F.marketLayer = L.geoJson(data, { onEachFeature: onEachFeature }).addTo(F.map);
+            F.marketLayer = L.geoJson(data, { pointToLayer: pointToLayer, onEachFeature: onEachFeature }).addTo(F.map);
         })
         .fail(function () {
             alert("fail");
@@ -64,11 +74,13 @@ function main() {
                 loadMap();
 
                 // options for the AwesomeMarker
-                userMarker = L.icon({
-                    iconUrl: '/bootstrap/here.svg',
-                    iconSize:     [76, 190], // size of the icon
-                    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                userMarker = L.AwesomeMarkers.icon({
+                   // iconUrl: '/bootstrap/here.svg',
+                    icon:   'user',
+                    color:  'red',
+                    //iconSize:     [76, 190], // size of the icon
+                    //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                    //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
 
                 // create an AwesomeMarker at the user location
