@@ -1,5 +1,6 @@
 var baseMap =  new L.StamenTileLayer("toner");
 
+
 function main() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -10,7 +11,7 @@ function main() {
             // create a new map at your location
             F.map = new L.map('map', {
                 center: new L.LatLng(position.coords.latitude, position.coords.longitude),
-                zoom: 16
+                zoom: 12
             });
 
             // add the baseMap to the layer
@@ -29,51 +30,41 @@ function main() {
 
             //Suzanne's stupid code
 
-            $.ajax({url:'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, store_name, the_geom FROM snap LIMIT 100'})
-                .done(  function (data) {
+            F.marketLayer = {};
+            $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ')'})
+                .done(function (data) {
                     console.log(data);
-                    L.geoJson(data).addTo(F.map);
+                    F.marketLayer = L.geoJson(data).addTo(F.map);
                 })
-                .fail( function() {
+                .fail(function () {
                     alert("fail");
                 });
-            
-            
 
-/*
-            // the layer url and options from CartoDB
-            // not sure if the query in layerOptions is actually necessary
-            layerUrl = 'http://jhk.cartodb.com/api/v1/viz/snap/viz.json';
-            layerOptions = {
-                query: 'select cartodb_id, store_name, the_geom_webmercator from {{table_name}}',
-            };
-*/
+            F.map.on('movestart', function () {
+                F.marketLayer.clearLayers();
+            });
+            F.map.on('dragstart', function () {
+                F.marketLayer.clearLayers();
+            });
+            F.map.on('zoomstart', function () {
+                F.marketLayer.clearLayers();
+            });
 
-/*
-            cartodb.createLayer(F.map, layerUrl, layerOptions)
-                .on('done', function (layer) {
-                    console.log("adding layer");
-                    console.log(layer);
-                    F.map.addLayer(layer);
-                    layer.setCartoCSS("#snap { " +
-                        "marker-file:url('http://food-desert-mapper.jhk.me/bootstrap/shopping.svg');" +
-                        "marker-opacity: 1.0; " + "marker-transform:translate(0,-85);"+
-                        //"marker-width: 35; " +
-                        //"marker-line-color: white; " +
-                        //"marker-line-width: 3; " +
-                        //"marker-line-opacity: 1.0; " +
-                        "marker-placement: point; " +
-                        //"marker-type: ellipse; " +
-                        "marker-allow-overlap: false; }");
-                    layer.infowindow.set('template', $('#infowindow_template').html());
-                    layer.infowindow.addField('cartodb_id');
-                })
-                .on('error', function (err) {
-                    console.log("Error: " + err);
-                });
-*/
+            F.map.on('moveend', function () {
+                $.ajax({url: 'http://jhk.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT cartodb_id, the_geom_webmercator store_name, the_geom FROM snap WHERE the_geom %26%26 ST_MakeEnvelope(' + F.map.getBounds().toBBoxString() + ')'})
+                    .done(function (data) {
+                        console.log(data);
+                        F.marketLayer = L.geoJson(data).addTo(F.map);
+                    })
+                    .fail(function () {
+                        alert("fail");
+                    });
+            });
+
         });
     }
 }
 
 $(document).ready(main());
+
+
