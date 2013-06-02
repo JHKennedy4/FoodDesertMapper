@@ -292,14 +292,14 @@ app.get('/insert/:id', function (req, res) {
 
     values = "";
     for (i in query) {
-        values = values + "('" + i + "', '" + query[i] + "'), ";
+        values = values + "('" + i + "', '" + query[i] + "', " + query.id + "), ";
     }
 
     values = values.replace(/(^\s*,)|(,\s*$)/g, '');
 
     console.log(values);
 
-    cartoquery = "insert into scores (food, priceorpresence)" +
+    cartoquery = "insert into scores (food, priceorpresence, store_id)" +
         " values " + values;
     client.query(cartoquery,
         function (err, data) {
